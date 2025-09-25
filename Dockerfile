@@ -1,8 +1,9 @@
 FROM apache/superset:latest
 
-# Set the working directory
+USER root
 WORKDIR /app
 
-# Copy and install local requirements
-COPY requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+# Install psycopg2 into the same venv Superset uses
+RUN . /app/.venv/bin/activate && pip install psycopg2-binary
+
+USER superset
